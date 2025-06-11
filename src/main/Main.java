@@ -1,11 +1,13 @@
 package main;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-/**
- * 実行用クラス
+/* 実行用クラス
  * @author M.Takahashi
  */
 public class Main {
@@ -18,33 +20,37 @@ public class Main {
 		// データベースURL、ユーザID、パスワード 定義
 		String url = "jdbc:mysql://localhost:3306/pc_shop_db";
 		String user = "root";
-		String password = "パスワードを入力（ギットハブで見えるため）１回１回消す";
-//		String password = "aaaa";
+		String password = "";
 
-		// データベースへの接続
-		try (Connection con = DriverManager.getConnection(url, user, password)) {
-			System.out.println("\n接続しました。");
+		// SQL定義(ユーザマスタより 3項目 取得)
+		String sql = "SELECT user_id, user_name, birth_day FROM m_user ";
+
+		// 接続・Statement作成・実行
+		try (Connection con = DriverManager.getConnection(url, user, password);
+				Statement stmt = con.createStatement();
+				ResultSet res = stmt.executeQuery(sql)) {
+
+			System.out.println("\n---全件表示します---");
+
+			while (res.next()) {
+				// 3項目取得
+				String uId = res.getString("user_id");
+				String name = res.getString("user_name");
+				Date bDay = res.getDate("birth_day");
+				
+				// １レコード分の表示
+				System.out.println("【Ｉ　Ｄ】" + uId);
+				System.out.println("【名　前】" + name);
+				if (bDay == null) {
+					System.out.println("【誕生日】(未登録)");
+				} else {
+					System.out.println("【誕生日】" + bDay);
+				}
+				System.out.println("----------------");
+			}
 		} catch (SQLException e) {
 			System.out.println("\nエラーが発生しました。");
 		}
-
-//		// try-with-resources を使わない場合
-//		Connection con = null;
-//		try {
-//			con = DriverManager.getConnection(url, user, password);
-//			System.out.println("\n接続しました。");
-//		} catch (SQLException e) {
-//			System.out.println("\nエラーが発生しました。");
-//		} finally {
-//			try {
-//				if (con != null) {
-//					con.close();
-//				}
-//			} catch (Exception e) {
-//				System.out.println("\n終了処理エラー。");
-//			}
-//		}
-
 	}
 
 }
