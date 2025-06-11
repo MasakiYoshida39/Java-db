@@ -52,6 +52,11 @@ public class Main {
 			System.out.println("\nエラーが発生しました。");
 		}
 		
+		
+		
+		
+		
+		
 		// SQL定義(ユーザマスタに１レコード追加)
 				String sql1 =  " INSERT INTO m_user                                      "
 						 	+ "   (user_id, user_name, email, birth_day)                "
@@ -63,7 +68,7 @@ public class Main {
 						Statement stmt = con.createStatement()) {
 
 					System.out.println("\n---登録します---\n");
-
+					//executeUpdateは更新の時使う 61行目の文
 					int cnt = stmt.executeUpdate(sql1); // レコード追加処理の実行
 					
 					System.out.println("\n"+ cnt + "件 登録しました。");
@@ -71,6 +76,15 @@ public class Main {
 				} catch (SQLException e) {
 					System.out.println("\nエラーが発生しました。");
 				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				
 				
 				String sql2 = "SELECT user_id, user_name, birth_day FROM m_user ";
