@@ -18,7 +18,7 @@ public class Main {
 		// データベースURL、ユーザID、パスワード 定義
 		String url = "jdbc:mysql://localhost:3306/pc_shop_db";
 		String user = "root";
-		String password = "y19956030";
+		String password = "パスワードを入力（ギットハブで見えるため）１回１回消す";
 //		String password = "aaaa";
 
 		// データベースへの接続
