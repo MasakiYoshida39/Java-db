@@ -22,7 +22,7 @@ public class Main {
 		String user = "root";
 		String password = "";
 
-		// SQL定義(ユーザマスタより 3項目 取得)
+		// SQL定義(ユーザマスタより 3項目 取得)SQLのコードそのまま
 		String sql = "SELECT user_id, user_name, birth_day FROM m_user ";
 
 		// 接続・Statement作成・実行
@@ -31,9 +31,9 @@ public class Main {
 				ResultSet res = stmt.executeQuery(sql)) {
 
 			System.out.println("\n---全件表示します---");
-
+			//nextで次々（データベース）と見ていく
 			while (res.next()) {
-				// 3項目取得
+				// 3項目取得（データベースから）
 				String uId = res.getString("user_id");
 				String name = res.getString("user_name");
 				Date bDay = res.getDate("birth_day");
