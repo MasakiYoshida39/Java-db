@@ -17,12 +17,12 @@ public class MyConnection {
 	/**
 	 * 接続ユーザ
 	 */
-	private final static String USER = "shop_user";
+	private final static String USER = "root";
 	
 	/**
 	 * パスワード
 	 */
-	private final static String PASSWORD = "pass";
+	private final static String PASSWORD = "";
 
 	/**
 	 * データベース接続を行い 接続情報を返す
