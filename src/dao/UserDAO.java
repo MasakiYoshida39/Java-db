@@ -8,10 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ユーザ情報用のDAO
- * @author M.Takahashi
- */
+
 public class UserDAO {
 
 	/**
@@ -48,7 +45,7 @@ public class UserDAO {
 	 * @throws SQLException
 	 */
 	public String selectNameById(String userId) throws SQLException {
-
+		
 		String name = null;		// 戻り値の初期化
 		
 		String sql = "SELECT user_name FROM m_user WHERE user_id = ? ";

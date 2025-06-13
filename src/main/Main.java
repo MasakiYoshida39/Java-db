@@ -14,7 +14,7 @@ public class Main {
 	private static final Scanner scan = new Scanner(System.in);;
 
 	/**
-	 * ユーザ情報用のDAO（インスタンス）
+	 * ユーザ情報用のDAO（インスタンス）ここ大事
 	 */
 	private static final UserDAO userDao = new UserDAO();
 	
@@ -62,6 +62,7 @@ public class Main {
 	}
 	
 	/**
+	 * do-whileの呼出処理が下のやつ
 	 * プロンプトを表示して入力を受け付ける
 	 * @param prompt ... プロンプト文字列
 	 * @return 入力結果文字列
