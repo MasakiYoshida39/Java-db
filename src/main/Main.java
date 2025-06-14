@@ -1,5 +1,6 @@
 package main;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -8,7 +9,6 @@ import dao.UserDAO;
 import dto.User;
 
 public class Main {
-
 	/**
 	 * キーボード入力用のScannerオブジェクト（インスタンス）
 	 */
@@ -40,6 +40,15 @@ public class Main {
 			case "r":
 				select();				// 検索
 				break;
+			case "c":
+				insert();				// 登録
+				break;
+			case "u":
+				update();				// 更新
+				break;
+			case "d":
+				delete();				// 削除
+				break;
 			case "q":
 				break;
 			default:
@@ -57,7 +66,7 @@ public class Main {
 	private static void displayGuide() {
 		
 		System.out.println("\n--------------------------------");
-		System.out.println("選択項目＝a:一覧, r:検索, q:終了");
+		System.out.println("選択項目＝a:一覧, r:検索, c:登録, u:更新, d:削除, q:終了");
 		System.out.println("--------------------------------");
 
 	}
@@ -129,7 +138,101 @@ public class Main {
 		}
 	}
 
+	/**
+	 * ユーザデータの入力を受付けて登録する。
+	 */
+	private static void insert() {
+		System.out.println("\n---登録します---\n");
+
+		// 登録データの入力を受け付ける
+		String userId 			= inputPrompt("【Ｉ　Ｄ】 > ");
+		String userName 		= inputPrompt("【名　前】 > ");
+		String email 			= inputPrompt("【メール】 > ");
+		String birthDayString 	= inputPrompt("【誕生日】 > ");
+		// 入力文字列ー＞birthDay (java.sql.Date型)の設定
+		Date birthDay = null;
+		if (! birthDayString.equals("")) {
+			try {
+				birthDay = Date.valueOf(birthDayString);
+			} catch (IllegalArgumentException e) {
+				System.out.println("\n日付は yyyy-mm-dd で指定してください。");
+				return;
+			}
+		}
+
+		// DTOを作成⇒登録処理に渡して処理実行
+		User user = new User(userId, userName, email, birthDay);
+		try {
+			
+			int cnt = userDao.insert(user);
+			
+			System.out.println("\n"+ cnt + "件 登録しました。");
+			
+		} catch (SQLException e) {
+			System.out.println("\n登録できませんでした。");
+		}
+
+	}
+	
+	/**
+	 * ユーザID（更新対象）と他項目の入力を受け付け
+	 * １件のユーザデータの更新を行う。
+	 */
+	private static void update() {
+
+		System.out.println("\n---IDで指定したレコードを更新します---\n");
+		String selectId 		= inputPrompt("【Ｉ　Ｄ】 > ");
+		String userName 		= inputPrompt("【名　前】 > ");
+		String email 			= inputPrompt("【メール】 > ");
+		String birthDayString 	= inputPrompt("【誕生日】 > ");
+		// 入力文字列ー＞birthDay (java.sql.Date型)の設定
+		Date birthDay = null;
+		if (! birthDayString.equals("")) {
+			try {
+				birthDay = Date.valueOf(birthDayString);
+			} catch (IllegalArgumentException e) {
+				System.out.println("\n日付は yyyy-mm-dd で指定してください。");
+				return;
+			}
+		}
+	
+		// DTOを作成⇒更新処理に渡して処理実行
+		User user = new User(selectId, userName, email, birthDay);
+		try {
+			
+			int cnt = userDao.update(user);
+			
+			System.out.println("\n"+ cnt + "件 更新しました。");
+
+		} catch (SQLException e) {
+			System.out.println("\n更新できませんでした。");
+		}
+		
+	}
+	
+	/**
+	 * ユーザID（削除対象）を受け付け
+	 * １件のユーザデータの削除を行う。
+	 */
+	private static void delete() {
+
+		System.out.println("\n---IDで指定したレコードを削除します---\n");
+		String selectId = inputPrompt("【Ｉ　Ｄ】 > ");
+
+		try {
+
+			int cnt = userDao.delete(selectId);		// 削除処理
+
+			System.out.println("\n"+ cnt + "件 削除しました。");
+
+		} catch (SQLException e) {
+			System.out.println("\n削除できませんでした。");
+		}
+	
+	}
+
 }
+
 
 
 
