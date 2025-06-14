@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-//毎回接続処理だけするもの
+/**
+ * DB接続クラス
+ * @author M.Takahashi
+ */
 public class MyConnection {
 	/**
 	 * データベースURL

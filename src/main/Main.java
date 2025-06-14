@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import dao.UserDAO;
+import dto.User;
 
 public class Main {
 
@@ -14,7 +15,7 @@ public class Main {
 	private static final Scanner scan = new Scanner(System.in);;
 
 	/**
-	 * ユーザ情報用のDAO（インスタンス）ここ大事
+	 * ユーザ情報用のDAO（インスタンス）
 	 */
 	private static final UserDAO userDao = new UserDAO();
 	
@@ -62,7 +63,6 @@ public class Main {
 	}
 	
 	/**
-	 * do-whileの呼出処理が下のやつ
 	 * プロンプトを表示して入力を受け付ける
 	 * @param prompt ... プロンプト文字列
 	 * @return 入力結果文字列
@@ -73,20 +73,22 @@ public class Main {
 		return scan.nextLine();
 
 	}
-
+	
 	/**
 	 * ユーザ一覧表示
 	 */
 	private static void displayList() {
 
 		try {
-			List<String> idList = userDao.selectAllId();	// ID一覧取得
+			List<User> userList = userDao.selectAll();		// 一覧取得
 			
 			System.out.println("\n---全てのユーザ---\n");
-			for (String id : idList) {
+			for (User user : userList) {
 
-				System.out.println(id);
-
+				System.out.println(
+						String.format("%-12s", user.getUserId()) 
+							+ "｜"
+							+ user.getUserName() );
 			}
 
 		} catch (SQLException e) {
@@ -96,7 +98,7 @@ public class Main {
 	}
 
 	/**
-	 * ユーザIDの入力を受け付け、１件のユーザ名を検索表示
+	 * ユーザIDの入力を受け付け、１件のユーザデータの検索表示
 	 */
 	private static void select() {
 
@@ -105,14 +107,20 @@ public class Main {
 	
 		try {
 
-			String name = userDao.selectNameById(selectId);
-
-			if (name != null) {
+			User user = userDao.selectById(selectId);
+			
+			if (user != null) {
 				
 				// 検索結果が存在する場合に内容表示
 				System.out.println("\n---検索結果---\n");
-				System.out.println("【Ｉ　Ｄ】" + selectId);
-				System.out.println("【名　前】" + name);
+				System.out.println("【Ｉ　Ｄ】" + user.getUserId());
+				System.out.println("【名　前】" + user.getUserName());
+				System.out.println("【メール】" + user.getEmail());
+				if (user.getBirthDay() == null) {
+					System.out.println("【誕生日】（未登録）");
+				} else {
+					System.out.println("【誕生日】" + user.getBirthDay());
+				}
 			} else {
 				System.out.println("\nレコードが存在しません。");
 			}
@@ -122,8 +130,6 @@ public class Main {
 	}
 
 }
-
-
 
 
 
