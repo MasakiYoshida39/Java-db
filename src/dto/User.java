@@ -2,10 +2,7 @@ package dto;
 
 import java.sql.Date;
 
-/**
- * ユーザ情報を表す DTO
- * @author M.Takahashi
- */
+
 public class User {
 	/******** フィールド ******************************************/
 	/**

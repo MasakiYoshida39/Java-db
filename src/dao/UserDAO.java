@@ -12,10 +12,7 @@ import java.util.List;
 
 import dto.User;
 
-/**
- * ユーザ情報用のDAO
- * @author M.Takahashi
- */
+
 public class UserDAO {
 
 	/**
@@ -88,6 +85,7 @@ public class UserDAO {
 	 * @return 処理件数
 	 * @throws SQLException
 	 */
+	//PreparedStatement と　PreparedStatement てなに
 	public int insert(User user) throws SQLException {
 		int cnt = 0;
 		
